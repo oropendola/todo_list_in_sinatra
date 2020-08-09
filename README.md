@@ -10,6 +10,6 @@
 
   + La lista de tareas esta en el fichero tareas.txt
 
-  + En views estan los ficherso erb
+  + En views estan los ficheros erb
 
 
