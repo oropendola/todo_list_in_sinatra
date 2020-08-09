@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TODO list</title>
+      <meta charset="UTF-8"/>
+      <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <style>
+           body {
+             height: 100%;
+             background-color:  #ffb366;
+             color:             #1a0d00;
+             font-size: 22px;
+             font-family: "New Times Roman", serif;
+           }
+           .container {
+             display: block;
+             text-align: center;
+           }
+           .table {
+             background-color: #ffb380;
+             color: #4d1f00;
+             border: 2px solid black;
+             border-radius: 15px;
+             width: 75%;
+             margin: auto;
+           }
+           .table-header {
+             background-color: #e67300;
+             color: white;
+             text-shadow: 2px;
+           }
+           .submit-button {
+             border: 1px solid #e67300;
+             border-radius: 15px;
+             font-size: 22px;
+             font-family: "New Times Roman", serif;
+             background-color: #e67300;
+             color: white;
+             margin: 5px;
+             box-shadow: 0px 0px 8px rgba(0,0,0,1);
+           }
+        </style>
+  </head>
+  <body>
+      <div class="container">
+        <h1>Proyectos pendientes</h1>
+        <form>
+        <table class="table">
+          <th class="table-header">ID</th>
+          <th class="table-header">Descripcion</th>
+          <th class="table-header">Estado</th>
+          <% @tasks.each do |task| %>
+            <tr>
+              <td> <%= task['id'] %> </td>
+              <td> <%= task['desc'] %> </td>
+              <td> <input type="checkbox" name="<%= task['id']%>" value="<%= task['ended'] %>"/> </td>
+            </tr>
+          <% end %>
+        </table>
+        <button class="submit-button" type="submit">Enviar</button>
+        </form>
+      </div>
+  </body>
+</html>
