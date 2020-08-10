@@ -9,13 +9,14 @@ require 'sinatra'
 
 class ToDo < Sinatra::Base
 
+  DATABASE_FILE = "tareas.json"
 
   def initialize
 
     # do NOT forget call always Sinatra::Base initialize
     super()
 
-    text = File.read("tareas.txt")
+    text = File.read(DATABASE_FILE)
 
     data = JSON.parse(text)
 
@@ -23,34 +24,62 @@ class ToDo < Sinatra::Base
 
   end
 
-   get '/' do
+  get '/' do
 
-      erb :index
+    erb :index
 
-   end
+  end
 
-   post '/cast' do
+  post '/cast' do
 
-      @message = "Gracias por enviar sus resultados"
+    @message = "Gracias por enviar sus resultados"
 
-      @ended = []
+    @ended = []
 
-      @tasks.each do |task|
+    @tasks.each do |task|
 
-        key = task['id']
+      key = task['id']
 
-        if params[key]
+      if params[key]
 
-          @ended << task['desc']
+        @ended << task['desc']
 
-        end
+        task['ended'] = true
 
       end
 
-      puts @ended
+    end
 
-      erb :cast
+    save
 
-   end
+    erb :cast
+
+ end
+
+private
+
+  def save
+
+    begin
+
+      new_file = DATABASE_FILE + ".new"
+
+      data = { "list" => @tasks }
+
+      json = data.to_json
+
+      file = File.open(new_file, "w")
+
+      file.write(json)
+
+      file.close
+
+    rescue StandardError
+
+      puts "Error when saving json data in #{new_file}"
+
+    end
+
+  end
 
 end
